@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Questionnaire préparatoire RI Empego</title>
+
+  <style>
+    body { font-family: Arial, sans-serif; background:#f3f6f8; margin:0; color:#203040; }
+    header { background:linear-gradient(135deg,#0f4c81 0%,#1487a6 50%,#63a64a 100%); color:white; text-align:center; padding:42px 20px; }
+    .logo { width:220px; background:white; padding:16px; border-radius:18px; margin-bottom:20px; box-shadow:0 8px 24px rgba(0,0,0,.18); }
+    header h1 { margin:0; font-size:36px; font-weight:800; }
+    header p { font-size:22px; margin:10px 0 0; }
+    .badge { display:inline-block; margin-top:18px; padding:10px 18px; border-radius:30px; background:rgba(255,255,255,.18); font-weight:700; }
+    main { max-width:950px; margin:30px auto; padding:0 18px; }
+    section { background:white; border-radius:18px; padding:24px; margin-bottom:22px; box-shadow:0 4px 16px rgba(0,0,0,.06); border:1px solid #e3e8ee; }
+    h2 { margin-top:0; color:#0f5f66; }
+    label { font-weight:700; display:block; margin-top:16px; margin-bottom:6px; }
+    input, select, textarea { width:100%; box-sizing:border-box; padding:12px; border:1px solid #cfd8df; border-radius:10px; font-size:15px; }
+    textarea { min-height:90px; }
+    .checks { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:10px; }
+    .checks label { margin:0; font-weight:500; background:#f8fbfc; border:1px solid #e1e8ed; padding:10px; border-radius:10px; cursor:pointer; }
+    .checks input { width:auto; margin-right:8px; }
+    button { background:#1487a6; color:white; border:none; border-radius:12px; padding:14px 20px; font-weight:800; cursor:pointer; font-size:16px; }
+    button:hover { background:#0f4c81; }
+    #jsonOutput { min-height:260px; font-family:monospace; }
+    .intro { font-size:17px; line-height:1.5; border-left:5px solid #1487a6; }
+    .hidden-info { font-size:13px; color:#607080; margin-top:10px; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="logo-empego.png" alt="Empego" class="logo">
+  <h1>Questionnaire préparatoire</h1>
+  <p>Rencontre Initiale Empego</p>
+  <div class="badge">⏱ Temps estimé : 5 à 10 minutes</div>
+</header>
+
+<main>
+  <section class="intro">
+    <p>
+      Afin de maximiser notre rencontre initiale, nous vous invitons à compléter ce court questionnaire.
+      Les informations recueillies nous permettront de mieux comprendre votre réalité, d’adapter la démonstration
+      et de préparer votre implantation.
+    </p>
+    <div class="hidden-info" id="pipedriveInfo"></div>
+  </section>
+
+  <section>
+    <h2>1. Votre pharmacie</h2>
+
+    <label>Nom de la pharmacie</label>
+    <input id="pharmacie_nom">
+
+    <label>Personne responsable du projet Empego</label>
+    <input id="responsable">
+
+    <label>Courriel</label>
+    <input id="courriel" type="email">
+
+    <label>Téléphone</label>
+    <input id="telephone">
+  </section>
+
+  <section>
+    <h2>2. Votre réalité</h2>
+
+    <label>Quel est le volume moyen de prescriptions traitées quotidiennement ?</label>
+    <select id="roulement">
+      <option></option>
+      <option>&lt; 150</option>
+      <option>150 - 400</option>
+      <option>400 - 700</option>
+      <option>700 - 950</option>
+      <option>950 - 1200</option>
+      <option>&gt; 1200</option>
+    </select>
+
+    <label>Comment décririez-vous principalement votre clientèle ?</label>
+    <div class="checks" data-name="clientele">
+      <label><input type="checkbox" value="Jeune"> Jeunes adultes</label>
+      <label><input type="checkbox" value="Famille"> Familles</label>
+      <label><input type="checkbox" value="Âgée"> Personnes âgées</label>
+      <label><input type="checkbox" value="Variée"> Clientèle diversifiée</label>
+      <label><input type="checkbox" value="Techno"> Très à l’aise avec la technologie</label>
+      <label><input type="checkbox" value="Défavorisée"> Milieu plus défavorisé</label>
+      <label><input type="checkbox" value="Aisée"> Milieu plus aisé</label>
+      <label><input type="checkbox" value="Éduquée"> Clientèle généralement très informée</label>
+      <label><input type="checkbox" value="Allophone"> Plusieurs langues parlées</label>
+    </div>
+
+    <label>Quels services sont actuellement offerts ?</label>
+    <div class="checks" data-name="expertise">
+      <label><input type="checkbox" value="Vaccination"> Vaccination</label>
+      <label><input type="checkbox" value="Prise de sang"> Prise de sang</label>
+      <label><input type="checkbox" value="Pharmacie clinique"> Pharmacie clinique</label>
+      <label><input type="checkbox" value="Ordonnance collective"> Ordonnances collectives</label>
+      <label><input type="checkbox" value="Pilulier"> Pilulier</label>
+      <label><input type="checkbox" value="Résidence"> Résidence</label>
+      <label><input type="checkbox" value="RPA"> RPA</label>
+      <label><input type="checkbox" value="Délégation des suivis aux ATPs"> Délégation des suivis aux ATP</label>
+      <label><input type="checkbox" value="Délégation des suivis aux infirmières"> Délégation des suivis aux infirmières</label>
+      <label><input type="checkbox" value="DVCC"> DVCC</label>
+    </div>
+
+    <label>Quels outils numériques utilisez-vous actuellement ?</label>
+    <div class="checks" data-name="saas">
+      <label><input type="checkbox" value="Clic Santé"> Clic Santé</label>
+      <label><input type="checkbox" value="Cliniciel"> Cliniciel</label>
+      <label><input type="checkbox" value="MedMe"> MedMe</label>
+      <label><input type="checkbox" value="MedEssist"> MedEssist</label>
+      <label><input type="checkbox" value="MAPflow"> MAPflow</label>
+      <label><input type="checkbox" value="RxConsultAction"> RxConsultAction</label>
+      <label><input type="checkbox" value="Solis"> Solis</label>
+      <label><input type="checkbox" value="Suivilogix"> Suivilogix</label>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Votre équipe</h2>
+
+    <label>Défis liés aux pharmaciens</label>
+    <div class="checks" data-name="pharmaciens">
+      <label><input type="checkbox" value="Télétravail"> Télétravail</label>
+      <label><input type="checkbox" value="Temps clinique"> Temps clinique limité</label>
+      <label><input type="checkbox" value="Vaccination"> Vaccination</label>
+      <label><input type="checkbox" value="Pénurie PH"> Pénurie de pharmaciens</label>
+      <label><input type="checkbox" value="Résistance PH"> Résistance au changement</label>
+    </div>
+
+    <label>Défis liés aux ATP</label>
+    <div class="checks" data-name="atps">
+      <label><input type="checkbox" value="TP"> TP</label>
+      <label><input type="checkbox" value="Guide-Santé"> Guide-Santé</label>
+      <label><input type="checkbox" value="Télétravail"> Télétravail</label>
+      <label><input type="checkbox" value="Vaccination"> Vaccination</label>
+      <label><input type="checkbox" value="Pénurie ATP"> Pénurie d’ATP</label>
+      <label><input type="checkbox" value="Résistance ATP"> Résistance au changement</label>
+    </div>
+
+    <label>Informations importantes concernant votre équipe</label>
+    <textarea id="notes_equipe"></textarea>
+  </section>
+
+  <section>
+    <h2>4. Vos consultations</h2>
+
+    <label>En moyenne, combien de consultations réalisez-vous chaque jour ?</label>
+    <input id="nombre_consultations" type="number">
+
+    <label>Quels types de consultations réalisez-vous le plus fréquemment ?</label>
+    <div class="checks" data-name="consultations_frequentes">
+      <label><input type="checkbox" value="Saisonnier"> Consultations saisonnières</label>
+      <label><input type="checkbox" value="MVL/MNP"> MVL / MNP</label>
+      <label><input type="checkbox" value="Médicaments"> Loi 31 / médicaments</label>
+      <label><input type="checkbox" value="Infection urinaire"> Infection urinaire</label>
+      <label><input type="checkbox" value="Santé voyage"> Santé voyage</label>
+      <label><input type="checkbox" value="Cessation tabagique"> Cessation tabagique</label>
+      <label><input type="checkbox" value="Problèmes de yeux"> Problèmes oculaires</label>
+      <label><input type="checkbox" value="Problèmes de peau"> Problèmes de peau</label>
+      <label><input type="checkbox" value="Streptocoque"> Streptocoque</label>
+      <label><input type="checkbox" value="Vaccination"> Vaccination</label>
+    </div>
+
+    <label>Quels sont vos principaux défis liés aux consultations ?</label>
+    <textarea id="notes_consultation"></textarea>
+  </section>
+
+  <section>
+    <h2>5. Vos suivis</h2>
+
+    <label>En moyenne, combien de suivis réalisez-vous chaque jour ?</label>
+    <input id="nombre_suivis" type="number">
+
+    <label>Quels types de suivis réalisez-vous le plus fréquemment ?</label>
+    <div class="checks" data-name="suivis_frequents">
+      <label><input type="checkbox" value="INR"> INR</label>
+      <label><input type="checkbox" value="HTA/Diabète/DLP"> HTA / Diabète / DLP</label>
+      <label><input type="checkbox" value="Douleur chronique"> Douleur chronique</label>
+      <label><input type="checkbox" value="Dépression/Anxiété/TDAH"> Dépression / Anxiété / TDAH</label>
+      <label><input type="checkbox" value="Ajustements"> Ajustements</label>
+      <label><input type="checkbox" value="Sevrage"> Sevrage</label>
+      <label><input type="checkbox" value="Antibiotique"> Antibiothérapie</label>
+      <label><input type="checkbox" value="Vaccination"> Vaccination</label>
+      <label><input type="checkbox" value="Infection urinaire"> Infection urinaire</label>
+      <label><input type="checkbox" value="Cessation tabagique"> Cessation tabagique</label>
+      <label><input type="checkbox" value="Streptocoque"> Streptocoque</label>
+      <label><input type="checkbox" value="Suivi général"> Suivi général</label>
+    </div>
+
+    <label>Quels sont vos principaux défis liés aux suivis ?</label>
+    <textarea id="notes_suivi"></textarea>
+  </section>
+
+  <section>
+    <h2>6. Vos objectifs</h2>
+
+    <label>Quels sont les principaux objectifs que vous aimeriez atteindre avec Empego ?</label>
+    <div class="checks" data-name="motivations">
+      <label><input type="checkbox" value="Sauver du temps"> Réduire le temps consacré aux tâches administratives</label>
+      <label><input type="checkbox" value="Facturer plus"> Optimiser les revenus liés aux activités cliniques</label>
+      <label><input type="checkbox" value="Faire plus de clinique"> Augmenter le temps consacré aux soins aux patients</label>
+      <label><input type="checkbox" value="Meilleure collecte de données"> Améliorer la collecte de données</label>
+      <label><input type="checkbox" value="Meilleure documentation"> Améliorer la documentation clinique</label>
+      <label><input type="checkbox" value="Standardiser"> Standardiser les processus</label>
+      <label><input type="checkbox" value="Déléguer davantage"> Déléguer davantage certaines tâches</label>
+      <label><input type="checkbox" value="Trier/prioriser"> Mieux prioriser les activités</label>
+      <label><input type="checkbox" value="Suivis asynchrones"> Optimiser les suivis asynchrones</label>
+      <label><input type="checkbox" value="PL67"> Mieux préparer l’arrivée du PL67</label>
+    </div>
+
+    <label>Y a-t-il un enjeu particulier que vous aimeriez aborder lors de la rencontre ?</label>
+    <textarea id="notes_roulement"></textarea>
+  </section>
+
+  <section>
+    <h2>Soumettre le questionnaire</h2>
+
+    <p>
+      Une fois le questionnaire complété, cliquez sur le bouton ci-dessous.
+      Un fichier de réponses sera généré automatiquement.
+    </p>
+
+    <button onclick="submitQuestionnaire()">Soumettre le questionnaire</button>
+
+    <label>Copie de secours des réponses</label>
+    <textarea id="jsonOutput" readonly></textarea>
+  </section>
+</main>
+
+<script>
+  function getUrlParam(name) {
+    return new URLSearchParams(window.location.search).get(name) || "";
+  }
+
+  function value(id) {
+    return document.getElementById(id)?.value?.trim() || "";
+  }
+
+  function checkedValues(name) {
+    return Array.from(document.querySelectorAll(`[data-name="${name}"] input:checked`))
+      .map(cb => cb.value);
+  }
+
+  function prefillFromUrl() {
+    const pharmacie = getUrlParam("pharmacie");
+    const contact = getUrlParam("contact");
+    const email = getUrlParam("email");
+    const phone = getUrlParam("phone");
+    const deal = getUrlParam("deal");
+    const org = getUrlParam("org");
+
+    const pharmacieField = document.getElementById("pharmacie_nom");
+    const contactField = document.getElementById("responsable");
+    const emailField = document.getElementById("courriel");
+    const phoneField = document.getElementById("telephone");
+
+    if (pharmacieField && pharmacie) pharmacieField.value = pharmacie;
+    if (contactField && contact) contactField.value = contact;
+    if (emailField && email) emailField.value = email;
+    if (phoneField && phone) phoneField.value = phone;
+
+    const info = [];
+    if (deal) info.push("Deal ID : " + deal);
+    if (org) info.push("Organisation ID : " + org);
+
+    if (info.length) {
+      document.getElementById("pipedriveInfo").textContent =
+        "Questionnaire relié à Pipedrive — " + info.join(" | ");
+    }
+  }
+
+  function buildPayload() {
+    return {
+      dealId: getUrlParam("deal"),
+      orgId: getUrlParam("org"),
+      submittedAt: new Date().toISOString(),
+      pharmacie: {
+        nom: value("pharmacie_nom"),
+        responsable: value("responsable"),
+        courriel: value("courriel"),
+        telephone: value("telephone")
+      },
+      ri: {
+        roulement: value("roulement"),
+        clientele: checkedValues("clientele"),
+        expertise: checkedValues("expertise"),
+        saas: checkedValues("saas"),
+        motivations: checkedValues("motivations"),
+        pharmaciens: checkedValues("pharmaciens"),
+        atps: checkedValues("atps"),
+        notes_equipe: value("notes_equipe"),
+        nombre_consultations: value("nombre_consultations"),
+        consultations_frequentes: checkedValues("consultations_frequentes"),
+        notes_consultation: value("notes_consultation"),
+        nombre_suivis: value("nombre_suivis"),
+        suivis_frequents: checkedValues("suivis_frequents"),
+        notes_suivi: value("notes_suivi"),
+        notes_roulement: value("notes_roulement")
+      },
+      meta: {
+        source: "questionnaire_preparatoire_ri",
+        version: "1.4",
+        status: "submitted"
+      }
+    };
+  }
+
+  function safeFileName(text) {
+    return String(text || "questionnaire-ri")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9-_]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "")
+      .toLowerCase();
+  }
+
+  function submitQuestionnaire() {
+    const payload = buildPayload();
+    const json = JSON.stringify(payload, null, 2);
+
+    document.getElementById("jsonOutput").value = json;
+
+    const pharmacyName = payload.pharmacie.nom || "pharmacie";
+    const dealId = payload.dealId ? "-deal-" + payload.dealId : "";
+    const date = new Date().toISOString().split("T")[0];
+    const filename = `questionnaire-ri-${safeFileName(pharmacyName)}${dealId}-${date}.json`;
+
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    alert("Questionnaire généré avec succès. Le fichier JSON a été téléchargé.");
+  }
+
+  window.addEventListener("DOMContentLoaded", prefillFromUrl);
+</script>
+
+</body>
+</html>
