@@ -1,0 +1,272 @@
+:root {
+  --blue: #0f4c81;
+  --teal: #1487a6;
+  --green: #63a64a;
+  --dark: #203040;
+  --muted: #607080;
+  --bg: #f3f6f8;
+  --card: #ffffff;
+  --border: #e3e8ee;
+  --success: #226b2f;
+  --danger: #a33;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--blue), var(--teal), var(--green));
+  color: white;
+  text-align: center;
+  padding: 42px 20px;
+}
+
+.logo {
+  width: 220px;
+  background: white;
+  padding: 16px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.hero p {
+  font-size: 22px;
+  margin: 10px 0 0;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  background: rgba(255,255,255,.18);
+  font-weight: 700;
+}
+
+.container {
+  max-width: 980px;
+  margin: 30px auto;
+  padding: 0 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 26px;
+  margin-bottom: 24px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.06);
+  border: 1px solid var(--border);
+}
+
+.intro {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-left: 6px solid var(--teal);
+  backdrop-filter: blur(8px);
+}
+
+h2 {
+  margin-top: 0;
+  color: #0f5f66;
+  font-size: 24px;
+}
+
+label {
+  font-weight: 700;
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cfd8df;
+  border-radius: 12px;
+  font-size: 15px;
+  background: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(20,135,166,.15);
+}
+
+textarea {
+  min-height: 95px;
+  resize: vertical;
+}
+
+.checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.checks label {
+  margin: 0;
+  font-weight: 500;
+  background: #f8fbfc;
+  border: 1px solid #e1e8ed;
+  padding: 12px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 48px;
+  line-height: 1.3;
+  transition: .15s ease;
+}
+
+.checks label:hover {
+  border-color: var(--teal);
+  background: #f1fafc;
+}
+
+.checks input {
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0 0;
+  flex: 0 0 18px;
+}
+
+button {
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 14px 22px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 6px 14px rgba(20,135,166,.25);
+}
+
+button:hover {
+  background: var(--blue);
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.meta-info {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+.progress-wrap {
+  margin-top: 18px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 15px;
+  background: #dde8ec;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+#progressFill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--teal), var(--green));
+  transition: width .25s ease;
+}
+
+.status-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #edf7f9;
+  border: 1px solid #c8e8ee;
+  color: #0f5f66;
+  font-weight: 700;
+}
+
+.status-box.success {
+  background: #eefaf0;
+  border-color: #bfe6c5;
+  color: var(--success);
+}
+
+.status-box.error {
+  background: #fff1f1;
+  border-color: #f2b8b8;
+  color: var(--danger);
+}
+
+#jsonOutput {
+  min-height: 260px;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.submit-card {
+  border-left: 6px solid var(--green);
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: #d44;
+  background: #fff8f8;
+}
+
+@media (max-width: 700px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  .logo {
+    width: 170px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .checks {
+    grid-template-columns: 1fr;
+  }
+
+  .intro {
+    position: static;
+  }
+}
