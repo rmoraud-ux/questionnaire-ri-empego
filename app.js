@@ -1,4 +1,5 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbxJJY9T2gi2CoAqPNvwgLE3Z6DaP9V9HSis1vU0N7pz-xh-7vNBY7sY8U1s2eg2H4TA/exec";
+const APP_VERSION = "4.3";
 
 let saveTimer = null;
 let isSubmitting = false;
@@ -32,7 +33,16 @@ function setStatus(message, type = "") {
 
 function setValue(id, val) {
   const el = document.getElementById(id);
-  if (el && val !== undefined && val !== null && !el.value) el.value = val;
+  if (!el || val === undefined || val === null || el.value) return;
+  el.value = val;
+}
+
+function setCheckedValues(name, values = []) {
+  if (!Array.isArray(values)) return;
+
+  document.querySelectorAll(`[data-name="${name}"] input`).forEach(cb => {
+    cb.checked = values.includes(cb.value);
+  });
 }
 
 function prefillFromUrl() {
@@ -45,8 +55,11 @@ function prefillFromUrl() {
   const org = getUrlParam("org");
 
   if (deal || org) {
-    document.getElementById("pipedriveInfo").textContent =
-      `Questionnaire relié à Pipedrive — Deal ID : ${deal || "-"} | Organisation ID : ${org || "-"}`;
+    const info = document.getElementById("pipedriveInfo");
+    if (info) {
+      info.textContent =
+        `Questionnaire relié à Pipedrive — Deal ID : ${deal || "-"} | Organisation ID : ${org || "-"}`;
+    }
   }
 }
 
@@ -86,7 +99,7 @@ function buildPayload(status = "IN_PROGRESS") {
 
     meta: {
       source: "questionnaire_preparatoire_ri",
-      version: "4.0",
+      version: APP_VERSION,
       status
     }
   };
@@ -158,6 +171,24 @@ function restoreLocal() {
       setValue("responsable", payload.pharmacie.responsable);
       setValue("courriel", payload.pharmacie.courriel);
       setValue("telephone", payload.pharmacie.telephone);
+    }
+
+    if (payload.ri) {
+      setValue("roulement", payload.ri.roulement);
+      setCheckedValues("clientele", payload.ri.clientele);
+      setCheckedValues("expertise", payload.ri.expertise);
+      setCheckedValues("saas", payload.ri.saas);
+      setCheckedValues("pharmaciens", payload.ri.pharmaciens);
+      setCheckedValues("atps", payload.ri.atps);
+      setValue("notes_equipe", payload.ri.notes_equipe);
+      setValue("nombre_consultations", payload.ri.nombre_consultations);
+      setCheckedValues("consultations_frequentes", payload.ri.consultations_frequentes);
+      setValue("notes_consultation", payload.ri.notes_consultation);
+      setValue("nombre_suivis", payload.ri.nombre_suivis);
+      setCheckedValues("suivis_frequents", payload.ri.suivis_frequents);
+      setValue("notes_suivi", payload.ri.notes_suivi);
+      setCheckedValues("motivations", payload.ri.motivations);
+      setValue("notes_roulement", payload.ri.notes_roulement);
     }
   } catch {}
 }
